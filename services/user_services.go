@@ -60,6 +60,29 @@ func Claim(claimRequest *models.ClaimRequest) (*models.ClaimResponse, error) {
 
 	} else {
 
+		gormDBResult := database.GormDB.Where("ip_address = ?", claimRequest.IPAddress).Find(&user)
+		if gormDBResult.Error != nil {
+			fmt.Println("gormDBResult result")
+			return nil, gormDBResult.Error
+		}
+
+		if user.ID > 0 {
+			lastClaimDate := user.ClaimDate
+			currentTime := time.Now()
+			diff := currentTime.Sub(lastClaimDate)
+			fmt.Printf("Seconds: %f\n", diff.Hours())
+
+			isSameWallet := user.WalletAddress == claimRequest.WalletAddress
+			mustWait := diff < time.Hour*24
+
+			if isSameWallet {
+				if mustWait {
+					return nil, errors.New("Already claimed, you must wait ")
+				}
+			}
+
+		}
+
 		user.WalletAddress = claimRequest.WalletAddress
 		user.IPAddress = claimRequest.IPAddress
 		user.ClaimDate = time.Now()
