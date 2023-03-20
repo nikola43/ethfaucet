@@ -72,13 +72,10 @@ func Claim(claimRequest *models.ClaimRequest) (*models.ClaimResponse, error) {
 			diff := currentTime.Sub(lastClaimDate)
 			fmt.Printf("Seconds: %f\n", diff.Hours())
 
-			isSameWallet := user.WalletAddress == claimRequest.WalletAddress
 			mustWait := diff < time.Hour*24
 
-			if isSameWallet {
-				if mustWait {
-					return nil, errors.New("Already claimed, you must wait ")
-				}
+			if mustWait {
+				return nil, errors.New("Already claimed, you must wait ")
 			}
 
 		}
