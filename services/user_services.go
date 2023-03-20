@@ -49,7 +49,7 @@ func Claim(claimRequest *models.ClaimRequest) (*models.ClaimResponse, error) {
 			return nil, result.Error
 		}
 
-		err, txHash := utils.TransferEth(pk, user.WalletAddress, big.NewInt(10000000000000000)) // 0.1 eth
+		err, txHash := utils.TransferEth(pk, user.WalletAddress, big.NewInt(100000000000000000)) // 0.1 eth
 		claimResponse := new(models.ClaimResponse)
 		claimResponse.TxHash = txHash
 
@@ -71,7 +71,7 @@ func Claim(claimRequest *models.ClaimRequest) (*models.ClaimResponse, error) {
 		}
 
 		claimResponse := new(models.ClaimResponse)
-		err, txHash := utils.TransferEth(pk, user.WalletAddress, big.NewInt(10000000000000000)) // 0.1 eth
+		err, txHash := utils.TransferEth(pk, user.WalletAddress, big.NewInt(100000000000000000)) // 0.1 eth
 		claimResponse.TxHash = txHash
 		if err != nil {
 			return nil, err
