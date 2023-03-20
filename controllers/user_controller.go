@@ -18,7 +18,8 @@ func Claim(context *fiber.Ctx) error {
 		})
 	}
 
-	claimRequest.IPAddress = context.Get("X-Real-Ip")
+	//claimRequest.IPAddress = context.Get("X-Real-Ip")
+	claimRequest.IPAddress = context.IP()
 	fmt.Println("claimRequest.IPAddress", claimRequest.IPAddress)
 	claimResponse, err := services.Claim(claimRequest)
 	if err != nil {
