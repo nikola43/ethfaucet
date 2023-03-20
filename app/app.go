@@ -29,7 +29,6 @@ func (a *App) Initialize(port string) {
 		log.Fatalf("Error loading .env file")
 	}
 
-	PROD := os.Getenv("PROD")
 	MYSQL_USER := os.Getenv("MYSQL_USER")
 	MYSQL_PASSWORD := os.Getenv("MYSQL_PASSWORD")
 	MYSQL_DATABASE := os.Getenv("MYSQL_DATABASE")
@@ -37,19 +36,12 @@ func (a *App) Initialize(port string) {
 
 	_ = XAPIKEY
 
-	if PROD == "1" {
-		MYSQL_USER = os.Getenv("MYSQL_USER_DEV")
-		MYSQL_PASSWORD = os.Getenv("MYSQL_PASSWORD_DEV")
-		MYSQL_DATABASE = os.Getenv("MYSQL_DATABASE_DEV")
-		XAPIKEY = os.Getenv("XAPIKEYDEV")
-	}
-
 	InitializeDatabase(
 		MYSQL_USER,
 		MYSQL_PASSWORD,
 		MYSQL_DATABASE)
 
-	database.Migrate()
+	//database.Migrate()
 
 	InitializeHttpServer(port)
 }

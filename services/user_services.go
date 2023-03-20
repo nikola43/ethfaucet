@@ -31,10 +31,11 @@ func Claim(claimRequest *models.ClaimRequest) (*models.ClaimResponse, error) {
 
 		isSameWallet := user.WalletAddress == claimRequest.WalletAddress
 		mustWait := diff < time.Hour*24
+
 		//mustWait := diff < time.Second*10
 		if isSameWallet {
 			if mustWait {
-				return nil, errors.New("Already claimed, you must wait " + diff.String())
+				return nil, errors.New("Already claimed, you must wait ")
 			}
 		}
 
