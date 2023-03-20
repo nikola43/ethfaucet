@@ -1,12 +1,14 @@
 package models
 
 import (
-	"github.com/nikola43/ethfaucet"
+	"time"
+
+	"github.com/nikola43/ethfaucet/models/base"
 )
 
-type Client struct {
+type User struct {
 	base.CustomGormModel
-	//ClinicID              uint                   `gorm:"type:INTEGER NULL; DEFAULT:NULL" json:"clinic_id" xml:"clinic_id" form:"clinic_id"`
-	Email                 string                      `gorm:"index; unique; type:varchar(64) not null" json:"email"`
-
+	WalletAddress string    `gorm:"index; unique; type:varchar(64) not null" json:"wallet_address"`
+	IPAddress     string    `gorm:"index; unique; type:varchar(11) not null" json:"ip_address"`
+	ClaimDate     time.Time `json:"claim_date"`
 }
