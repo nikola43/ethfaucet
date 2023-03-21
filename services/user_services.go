@@ -31,11 +31,12 @@ func Claim(claimRequest *models.ClaimRequest) (*models.ClaimResponse, error) {
 
 		isSameWallet := user.WalletAddress == claimRequest.WalletAddress
 		mustWait := diff < time.Hour*24
+		waitTime := time.Hour*24 - diff
 
 		//mustWait := diff < time.Second*10
 		if isSameWallet {
 			if mustWait {
-				return nil, errors.New("Already claimed, you must wait ")
+				return nil, errors.New("Already claimed, you must wait " + waitTime.String())
 			}
 		}
 
@@ -73,9 +74,10 @@ func Claim(claimRequest *models.ClaimRequest) (*models.ClaimResponse, error) {
 			fmt.Printf("Seconds: %f\n", diff.Hours())
 
 			mustWait := diff < time.Hour*24
+			waitTime := time.Hour*24 - diff
 
 			if mustWait {
-				return nil, errors.New("Already claimed, you must wait ")
+				return nil, errors.New("Already claimed, you must wait " + waitTime.String())
 			}
 
 		}
